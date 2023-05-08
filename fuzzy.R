@@ -1,18 +1,10 @@
-# Load frbs library
-library(frbs)
+library(sets)
 
-# Create input and output data
-x <- seq(-10, 10, length.out = 100)
-y <- sin(x) + rnorm(length(x), 0, 0.1)
+# Define a universal set for age
+age_univ <- FuzzySet(seq(0, 100, by = 1), rep(1, 101), name = "age")
 
-# Create fuzzy model
-model <- frbs.learn(x, y, method.type = "ANFIS")
+# Define a fuzzy set for young age
+age_young <- FuzzySet(c(0, 0, 25, 35), c(1, 0, 0, 0), name = "young")
 
-# Predict output for new input
-new_x <- seq(-12, 12, length.out = 200)
-new_y <- predict(model, new_x)
-
-# Plot input, output and predicted output
-plot(x, y, type = "l", col = "blue", ylim = c(-1.5, 1.5))
-lines(new_x, new_y, type = "l", col = "red")
-legend("topleft", legend = c("Original data", "Predicted data"), col = c("blue", "red"), lty = 1)
+# Plot the fuzzy set
+plot(age_univ, age_young, main = "Young Age")
