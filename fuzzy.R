@@ -1,21 +1,31 @@
-# Import the sets library
-library(sets)
+# Create a fuzzy set
+temperature <- c(0, 20, 30, 40)
 
-# Create a fuzzy set for temperature
-cold <- fuzzy_set(name = "cold", membership = function(x) {
-  ifelse(x < 20, 1, 0)
-})
+# Create membership functions for the fuzzy set
+low <- function(x) {min(x, 20) / 20}
+medium <- function(x) {max(0, min(x - 20, 10)) / 10}
+high <- function(x) {max(0, x - 30) / 10}
 
-hot <- fuzzy_set(name = "hot", membership = function(x) {
-  ifelse(x > 30, 1, 0)
-})
+# Get the membership value of a specific input
+temperature_value <- 25
 
-# Create a fuzzy variable for temperature
-temperature <- fuzzy_variable(name = "temperature", sets = c(cold, hot))
+low_membership <- low(temperature_value)
+medium_membership <- medium(temperature_value)
+high_membership <- high(temperature_value)
 
-# Set the temperature to 40 degrees Celsius
-temperature$set(40)
+# Print the membership values
+print(low_membership)
+print(medium_membership)
+print(high_membership)
 
-# Plot the fuzzy sets and the temperature
-plot(temperature)
+# Create a data frame of membership values
+membership_df <- data.frame(
+  membership = c(low_membership, medium_membership, high_membership),
+  temperature = c(temperature_value, temperature_value, temperature_value),
+  set = c("Low", "Medium", "High")
+)
 
+# Plot a line chart of the membership values
+plot(membership_df$temperature, membership_df$membership, type = "l",
+     main = "Membership Values for Fuzzy Set",
+     xlab = "Temperature", ylab = "Membership Value")
