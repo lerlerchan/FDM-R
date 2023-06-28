@@ -45,3 +45,8 @@ membership_df <- data.frame(
 plot(membership_df$temperature, membership_df$membership, type = "l",
      main = "Membership Values for Fuzzy Set",
      xlab = "Temperature", ylab = "Membership Value")
+
+# plot bars for the membership values
+barplot(membership_df$membership, names.arg = membership_df$set,
+        main = "Membership Values for Fuzzy Set",
+        xlab = "Fuzzy Set", ylab = "Membership Value")
